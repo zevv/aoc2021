@@ -11,7 +11,6 @@ defmodule Day01 do
     parse()
     |> Enum.chunk_every(2, 1, :discard)
     |> Enum.count(fn [v1, v2] -> v1 < v2 end)
-    |> IO.puts()
   end
 
   defp run2() do
@@ -20,12 +19,10 @@ defmodule Day01 do
     |> Enum.map(&Enum.sum/1)
     |> Enum.chunk_every(2, 1, :discard)
     |> Enum.count(fn [v1, v2] -> v1 < v2 end)
-    |> IO.puts()
   end
 
   def run() do
-    run1()
-    run2()
+    [ run1(), run2() ]
   end
 
 end
