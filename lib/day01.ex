@@ -22,7 +22,7 @@ defmodule Day01 do
   end
 
   def run() do
-    [ run1(), run2() ]
+    [1400, 1429] =[run1(), run2()]
   end
 
 end
