@@ -1,94 +1,6 @@
 
 defmodule Day04 do
 
-  defmodule Player do
-    use GenServer
-
-    @impl true
-    def init(board) do
-      {:ok, %{board: board, score: 0, round: 0}}
-    end
-    
-    @impl true
-    def handle_cast({n, round}, player) do
-
-      player = case player.score do
-        0 ->
-          board = Enum.map(player.board, &(if &1 == n do "X" else &1 end))
-          score = calc_score(player.board) * String.to_integer(n)
-          %{player | board: board, score: score, round: round}
-          IO.puts("win #{score}")
-        _ ->
-          player
-      end
-
-      {:noreply, player}
-    end
-
-    defp calc_score(b) do
-      rows = Enum.chunk_every(b, 5)
-      if full?(rows) or full?(transpose(rows)) do
-        b
-        |> Enum.filter(&(&1 != "X"))
-        |> Enum.map(&String.to_integer/1)
-        |> Enum.sum
-      else
-        0
-      end
-    end
-    
-    defp transpose(b) do
-      b |> Enum.zip |> Enum.map(&Tuple.to_list/1)
-    end
-
-    defp full?(rows) do
-      Enum.any?(rows, fn row -> Enum.all?(row, &(&1 == "X")) end)
-    end
-
-  end
-
-  defmodule Host do
-    use GenServer
-
-    @impl true
-    def init(_) do
-      [numbers | boards] = File.read!("data/04.txt") |> String.split("\n\n")
-      numbers = String.split(numbers, ",")
-      players = boards
-               |> Enum.map(&String.split(&1))
-               |> Enum.map(&GenServer.start_link(Day04.Player, &1))
-      {:ok, %{numbers: numbers, players: players} }
-    end
-
-    defp play(host, round) do
-      case host.numbers do
-        [n | numbers] ->
-          Enum.map(host.players, fn {:ok, p} ->
-            GenServer.cast(p, {n, round})
-          end)
-          play(%{host | numbers: numbers}, round+1)
-        [] ->
-          "done"
-      end
-    end
-
-    @impl true
-    def handle_cast(what, host) do
-      case what do
-        :play -> play(host, 0)
-      end
-      {:noreply, host}
-    end
-
-  end
-
-
-  def run2() do
-    {:ok, host} = GenServer.start_link(Day04.Host, 0)
-    GenServer.cast(host, :play)
-  end
-
-
   defp transpose(b) do
     b |> Enum.zip |> Enum.map(&Tuple.to_list/1)
   end
@@ -97,7 +9,7 @@ defmodule Day04 do
     Enum.any?(rows, fn row -> Enum.all?(row, &(&1 == "X")) end)
   end
 
-  defp calc_score(b) do
+  def calc_score(b) do
     rows = Enum.chunk_every(b, 5)
     if full?(rows) or full?(transpose(rows)) do
       b
