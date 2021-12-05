@@ -18,7 +18,7 @@ defmodule Day05 do
 
   def work(filt) do
     File.read!("data/05.txt")
-    |> String.split([",", " -> ", "\n"], trim: true)
+    |> String.split(~r/[^0-9]+/, trim: true)
     |> Enum.map(&String.to_integer/1)
     |> Enum.chunk_every(4, 4)
     |> Enum.filter(filt)
