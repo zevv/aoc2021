@@ -12,6 +12,7 @@ defmodule Aoc2021 do
       &Day07.run/0,
       &Day08.run/0,
       &Day09.run/0,
+      &Day10.run/0,
     ]
 
     |> Enum.map(&Task.async/1)
