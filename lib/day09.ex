@@ -34,8 +34,8 @@ defmodule Day09 do
     |> Enum.product()
   end
 
-  def run() do
-    map = File.read!("data/09.txt")
+  def parse_map(fname) do
+    map = File.read!(fname)
     |> String.split("\n", trim: true)
     |> Enum.map(fn e ->
       String.split(e, "", trim: true)
@@ -50,6 +50,10 @@ defmodule Day09 do
     end)
     |> List.flatten
     |> Map.new
+  end
+
+  def run() do
+    map = parse_map("data/09.txt")
 
     [452, 1263735] = [run1(map), run2(map)]
 
