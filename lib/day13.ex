@@ -10,7 +10,7 @@ defmodule Day13 do
     end)
   end
   
-  defp draw(map) do
+  def draw(map) do
     w = Map.keys(map) |> Enum.map(&elem(&1, 0)) |> Enum.max()
     h = Map.keys(map) |> Enum.map(&elem(&1, 1)) |> Enum.max()
     for y <- 0..h do for x <- 0..w do Map.get(map, {x,y}, ".") end |> Enum.join() end |> Enum.join("\n")
