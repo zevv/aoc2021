@@ -17,6 +17,7 @@ defmodule Day15 do
   def walk(map, finish, q, costs) do
     {{{x, y}, cost}, q} = Heap.split(q)
     if {x, y} == finish do
+      IO.puts(Enum.count(costs))
       cost
     else
       ns = 
