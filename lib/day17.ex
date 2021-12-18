@@ -24,8 +24,11 @@ defmodule Day17 do
         |> Enum.map(&pewpew({0, 0}, &1, &1, target))
         |> Enum.filter(&(&1))
 
+    l |>
+    Enum.map(fn {x, y} -> IO.puts("#{x} #{y}") end)
+
     part1 = l
-            |> Enum.max_by( fn {dx, dy} -> dy end)
+            |> Enum.max_by(fn {dx, dy} -> dy end)
             |> then(fn {_, dy} -> ((dy + 1) * 0.5) * dy end)
 
     part2 = l
