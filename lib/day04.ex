@@ -1,7 +1,7 @@
 
 defmodule Day04 do
 
-  defp transpose(b) do
+  def transpose(b) do
     b |> Enum.zip |> Enum.map(&Tuple.to_list/1)
   end
 
