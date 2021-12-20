@@ -11,9 +11,10 @@ defmodule Day13 do
   end
   
   def draw(map) do
-    w = Map.keys(map) |> Enum.map(&elem(&1, 0)) |> Enum.max()
-    h = Map.keys(map) |> Enum.map(&elem(&1, 1)) |> Enum.max()
-    for y <- 0..h do for x <- 0..w do Map.get(map, {x,y}, ".") end |> Enum.join() end |> Enum.join("\n")
+    keys = Map.keys(map)
+    {x1, x2} = keys |> Enum.map(&elem(&1, 0)) |> Enum.min_max()
+    {y1, y2} = keys |> Enum.map(&elem(&1, 1)) |> Enum.min_max()
+    for y <- y1..y2 do for x <- x1..x2 do Map.get(map, {x,y}, ".") end |> Enum.join() end |> Enum.join("\n")
     |> IO.puts()
   end
   
